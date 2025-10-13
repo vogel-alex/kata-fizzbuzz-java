@@ -3,16 +3,15 @@
 
 package fizzbuzz;
 
+import java.util.List;
+
 public class FizzBuzz {
 
+	private final List<WordCalculator> calculators = List.of(new Mod6Or7Calculator(), new Mod5Calculator(), new Contains3Calculator(), new Mod7Calculator());
+
 	public String translate(int number) {
-		if (((number % 5) == 0) && ((number % 7) == 0)) // A multiple of both?
-			return "FizzBuzz";
-		else if ((number % 5) == 0)
-			return "Fizz"; // else a multiple of 5?
-		else if ((number % 7) == 0)
-			return "Buzz"; // else a multiple of 7?
-		else
-			return String.valueOf(number); // else just print it
+		FizzBuzzNumber fbNumber = new FizzBuzzNumber(number);
+		calculators.stream().forEach(x -> x.calculate(fbNumber));
+		return fbNumber.getResult();
 	}
 }
