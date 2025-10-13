@@ -3,16 +3,27 @@
 
 package fizzbuzz;
 
+import java.util.*;;
+
 public class FizzBuzz {
 
-	public String translate(int number) {
-		if (((number % 5) == 0) && ((number % 7) == 0)) // A multiple of both?
-			return "FizzBuzz";
-		else if ((number % 5) == 0)
-			return "Fizz"; // else a multiple of 5?
-		else if ((number % 7) == 0)
-			return "Buzz"; // else a multiple of 7?
-		else
-			return String.valueOf(number); // else just print it
+	private final List<Mutator> mutators = new ArrayList<>();
+
+	public FizzBuzz() {
+		this(List.of(new Fizzer(), new Buzzer()));
 	}
+
+	public FizzBuzz(List<Mutator> mutators) {
+		mutators.addAll(mutators);
+		mutators.add(new Fallback());
+	}
+
+	public String translate(int number) {
+		String result = "";
+		for (var mutator : mutators) {
+			result = mutator.mutate(number, result);
+		}
+		return result;
+	}
+
 }
