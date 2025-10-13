@@ -3,16 +3,27 @@
 
 package fizzbuzz;
 
+
 public class FizzBuzz {
 
-	public String translate(int number) {
-		if (((number % 5) == 0) && ((number % 7) == 0)) // A multiple of both?
-			return "FizzBuzz";
-		else if ((number % 5) == 0)
-			return "Fizz"; // else a multiple of 5?
-		else if ((number % 7) == 0)
-			return "Buzz"; // else a multiple of 7?
-		else
-			return String.valueOf(number); // else just print it
+	private RuleContainer ruleContainer;
+
+	public FizzBuzz(){
+		ruleContainer = new RuleContainer();
+		ruleContainer.addCondition(new ModuloCondition(5), "Fizz");
+		ruleContainer.addCondition(new ModuloCondition(7), "Buzz");
+	}
+
+	public String translate(int number) {   
+		String result = "";
+		for(var rule : ruleContainer.getRules()){
+			if(rule.condition().checkCondition(number)){
+				result += rule.output();
+			}
+		}
+		if(result.isEmpty()){
+			result = String.valueOf(number);
+		}
+		return result;
 	}
 }
