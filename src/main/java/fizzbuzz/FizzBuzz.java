@@ -14,16 +14,7 @@ public class FizzBuzz {
 		ruleContainer.addCondition(new ModuloCondition(7), "Buzz");
 	}
 
-	public String translate(int number) {   
-		String result = "";
-		for(var rule : ruleContainer.getRules()){
-			if(rule.condition().checkCondition(number)){
-				result += rule.output();
-			}
-		}
-		if(result.isEmpty()){
-			result = String.valueOf(number);
-		}
-		return result;
+	public String translate(int number) {
+		return Translator.translate(number, ruleContainer);
 	}
 }
