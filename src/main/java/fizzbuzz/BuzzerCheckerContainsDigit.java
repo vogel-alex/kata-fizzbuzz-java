@@ -5,7 +5,7 @@ public class BuzzerCheckerContainsDigit implements BuzzerChecker{
     @Override
     public boolean check(int number, Buzzword buzzword) {
         String numberString = Integer.toString(number);
-        for (var buzzwordNumber : buzzword.number()) {
+        for (var buzzwordNumber : buzzword.numbers()) {
             if (numberString.contains(Integer.toString(buzzwordNumber))) 
                 return true;
         }
