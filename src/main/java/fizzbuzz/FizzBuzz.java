@@ -3,16 +3,23 @@
 
 package fizzbuzz;
 
+import java.util.List;
+
 public class FizzBuzz {
 
+	private BuzzwordProvider provider; 
+	private BuzzerFilter filter;
+	private BuzzerTranslator translator;
+
+	public FizzBuzz(BuzzwordProvider provider, BuzzerFilter filter, BuzzerTranslator translator) {
+		this.provider = provider;
+		this.filter = filter;
+		this.translator = translator;
+	}
+
 	public String translate(int number) {
-		if (((number % 5) == 0) && ((number % 7) == 0)) // A multiple of both?
-			return "FizzBuzz";
-		else if ((number % 5) == 0)
-			return "Fizz"; // else a multiple of 5?
-		else if ((number % 7) == 0)
-			return "Buzz"; // else a multiple of 7?
-		else
-			return String.valueOf(number); // else just print it
+		List<BuzzerAndChecker> buzzwords = provider.getBuzzwords();
+		List<Buzzword> matches = filter.filter(number, buzzwords);
+		return translator.translate(number, matches);
 	}
 }
